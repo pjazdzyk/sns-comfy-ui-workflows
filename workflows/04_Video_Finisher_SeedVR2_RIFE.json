@@ -1,0 +1,1176 @@
+{
+ "last_node_id": 10001,
+ "last_link_id": 27,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadVideo",
+   "pos": [
+    700,
+    110
+   ],
+   "size": [
+    386.798828125,
+    585.6112630208333
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      1
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadVideo"
+   },
+   "widgets_values": [
+    "demo_clip_for_finisher.mp4",
+    "image"
+   ],
+   "title": "LOAD VIDEO"
+  },
+  {
+   "id": 2,
+   "type": "GetVideoComponents",
+   "pos": [
+    1526.798828125,
+    110
+   ],
+   "size": [
+    260,
+    106
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      2
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "links": [
+      25
+     ],
+     "slot_index": 1
+    },
+    {
+     "name": "fps",
+     "type": "FLOAT",
+     "links": [
+      22
+     ],
+     "slot_index": 2
+    },
+    {
+     "name": "bit_depth",
+     "type": "COMBO",
+     "links": [],
+     "slot_index": 3
+    },
+    {
+     "name": "color_space",
+     "type": "COMBO",
+     "links": [],
+     "slot_index": 4
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GetVideoComponents"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 3,
+   "type": "UNETLoader",
+   "pos": [
+    2006.798828125,
+    110
+   ],
+   "size": [
+    347.976171875,
+    82
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      7,
+      9
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader",
+    "models": [
+     {
+      "name": "seedvr2_7b_fp16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/SeedVR2/resolve/main/diffusion_models/seedvr2_7b_fp16.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
+   },
+   "widgets_values": [
+    "seedvr2_7b_fp16.safetensors",
+    "default"
+   ],
+   "title": "SeedVR2 (7B = best, 3B = ~2x faster)"
+  },
+  {
+   "id": 4,
+   "type": "VAELoader",
+   "pos": [
+    2006.798828125,
+    282
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      5,
+      16
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "seedvr2_ema_vae_fp16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/SeedVR2/resolve/main/vae/seedvr2_ema_vae_fp16.safetensors",
+      "directory": "vae"
+     }
+    ]
+   },
+   "widgets_values": [
+    "seedvr2_ema_vae_fp16.safetensors"
+   ],
+   "title": "SeedVR2 VAE"
+  },
+  {
+   "id": 5,
+   "type": "ResizeImageMaskNode",
+   "pos": [
+    2006.798828125,
+    430
+   ],
+   "size": [
+    270,
+    154
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "input",
+     "type": "COMFY_MATCHTYPE_V3",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "resized",
+     "type": "COMFY_MATCHTYPE_V3",
+     "links": [
+      3,
+      18
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ResizeImageMaskNode"
+   },
+   "widgets_values": [
+    "scale by multiplier",
+    2.0,
+    "lanczos"
+   ],
+   "title": "Upscale factor"
+  },
+  {
+   "id": 6,
+   "type": "SeedVR2Preprocess",
+   "pos": [
+    2006.798828125,
+    674
+   ],
+   "size": [
+    260,
+    26
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "resized_images",
+     "type": "IMAGE",
+     "link": 3
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      4
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2Preprocess"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 7,
+   "type": "VAEEncodeTiled",
+   "pos": [
+    2006.798828125,
+    790
+   ],
+   "size": [
+    270,
+    150
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "pixels",
+     "type": "IMAGE",
+     "link": 4
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 5
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      6
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEEncodeTiled"
+   },
+   "widgets_values": [
+    512,
+    128,
+    64,
+    8
+   ]
+  },
+  {
+   "id": 8,
+   "type": "SeedVR2TemporalChunk",
+   "pos": [
+    2444.775,
+    110
+   ],
+   "size": [
+    295.4830078125,
+    102
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "name": "latents",
+     "type": "LATENT",
+     "links": [
+      8,
+      12
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "temporal_overlap",
+     "type": "INT",
+     "links": [
+      14
+     ],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2TemporalChunk"
+   },
+   "widgets_values": [
+    2,
+    "auto"
+   ],
+   "title": "Split into VRAM-sized chunks"
+  },
+  {
+   "id": 9,
+   "type": "SeedVR2Conditioning",
+   "pos": [
+    2444.775,
+    302
+   ],
+   "size": [
+    260,
+    46
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 7
+    },
+    {
+     "name": "vae_conditioning",
+     "type": "LATENT",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      10
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "links": [
+      11
+     ],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2Conditioning"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 10,
+   "type": "KSampler",
+   "pos": [
+    2444.775,
+    438
+   ],
+   "size": [
+    270,
+    262
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 9
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 10
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 11
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 12
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      13
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSampler"
+   },
+   "widgets_values": [
+    7,
+    "fixed",
+    1,
+    1.0,
+    "euler",
+    "simple",
+    1.0
+   ],
+   "title": "SeedVR2 (1 step)"
+  },
+  {
+   "id": 11,
+   "type": "SeedVR2TemporalMerge",
+   "pos": [
+    2444.775,
+    790
+   ],
+   "size": [
+    260,
+    46
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "latents",
+     "type": "LATENT",
+     "link": 13
+    },
+    {
+     "name": "temporal_overlap",
+     "type": "INT",
+     "link": 14
+    }
+   ],
+   "outputs": [
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "links": [
+      15
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2TemporalMerge"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 12,
+   "type": "VAEDecodeTiled",
+   "pos": [
+    2830.2580078125,
+    110
+   ],
+   "size": [
+    270,
+    150
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 15
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 16
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      17
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecodeTiled"
+   },
+   "widgets_values": [
+    512,
+    128,
+    64,
+    8
+   ]
+  },
+  {
+   "id": 13,
+   "type": "SeedVR2PostProcessing",
+   "pos": [
+    2830.2580078125,
+    350
+   ],
+   "size": [
+    305.134765625,
+    78
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 17
+    },
+    {
+     "name": "original_resized_images",
+     "type": "IMAGE",
+     "link": 18
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      20
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2PostProcessing"
+   },
+   "widgets_values": [
+    "lab"
+   ]
+  },
+  {
+   "id": 14,
+   "type": "FrameInterpolationModelLoader",
+   "pos": [
+    40,
+    1432
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INTERP_MODEL",
+     "type": "INTERP_MODEL",
+     "links": [
+      19
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "FrameInterpolationModelLoader",
+    "models": [
+     {
+      "name": "rife_v4.26_heavy.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/frame_interpolation/resolve/main/frame_interpolation/rife_v4.26_heavy.safetensors",
+      "directory": "frame_interpolation"
+     }
+    ]
+   },
+   "widgets_values": [
+    "rife_v4.26_heavy.safetensors"
+   ],
+   "title": "RIFE 4.26 heavy"
+  },
+  {
+   "id": 15,
+   "type": "PrimitiveInt",
+   "pos": [
+    40,
+    1260
+   ],
+   "size": [
+    337.011328125,
+    82
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      21,
+      23
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    2,
+    "fixed"
+   ],
+   "title": "FPS multiplier (2 = 16->32 / 24->48)"
+  },
+  {
+   "id": 16,
+   "type": "FrameInterpolate",
+   "pos": [
+    530,
+    1260
+   ],
+   "size": [
+    270,
+    78
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "interp_model",
+     "type": "INTERP_MODEL",
+     "link": 19
+    },
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 20
+    },
+    {
+     "name": "multiplier",
+     "type": "INT",
+     "widget": {
+      "name": "multiplier"
+     },
+     "link": 21
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      24
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "FrameInterpolate"
+   },
+   "widgets_values": [
+    2
+   ],
+   "title": "Interpolate"
+  },
+  {
+   "id": 17,
+   "type": "ComfyMathExpression",
+   "pos": [
+    40,
+    1580
+   ],
+   "size": [
+    400,
+    200
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "values.a",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 22
+    },
+    {
+     "name": "values.b",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": 23
+    },
+    {
+     "name": "values.c",
+     "type": "FLOAT,INT,BOOLEAN",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "FLOAT",
+     "type": "FLOAT",
+     "links": [
+      26
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [],
+     "slot_index": 1
+    },
+    {
+     "name": "BOOL",
+     "type": "BOOLEAN",
+     "links": [],
+     "slot_index": 2
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ComfyMathExpression"
+   },
+   "widgets_values": [
+    "a * b"
+   ],
+   "title": "new fps"
+  },
+  {
+   "id": 18,
+   "type": "CreateVideo",
+   "pos": [
+    530,
+    1428
+   ],
+   "size": [
+    270,
+    150
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 24
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "link": 25
+    },
+    {
+     "name": "fps",
+     "type": "FLOAT",
+     "widget": {
+      "name": "fps"
+     },
+     "link": 26
+    }
+   ],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      27
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CreateVideo"
+   },
+   "widgets_values": [
+    30.0,
+    "auto",
+    "sRGB",
+    "none"
+   ]
+  },
+  {
+   "id": 19,
+   "type": "SaveVideo",
+   "pos": [
+    890,
+    1260
+   ],
+   "size": [
+    460,
+    600
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 27
+    }
+   ],
+   "outputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "links": [],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SaveVideo"
+   },
+   "widgets_values": [
+    "video/SeedVR2_RIFE_finished",
+    "mp4",
+    "h264",
+    "re-encode",
+    16.0
+   ],
+   "title": "SAVE"
+  },
+  {
+   "id": 10000,
+   "type": "MarkdownNote",
+   "pos": [
+    40,
+    110
+   ],
+   "size": [
+    440,
+    420
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {},
+   "widgets_values": [
+    "## 04 \u00b7 Video finisher\nLoad any clip, for example from 03 LTX or 05 Wan Animate.\n\n1. **SeedVR2 7B**, 2\u00d7 upscale. It restores real texture, so a 720p clip becomes 1440p. The clip is processed in auto-sized temporal chunks, so long videos fit in VRAM. Colors are matched with LAB.\n2. **RIFE 4.26 heavy**, 2\u00d7 frames: 16 fps becomes 32, or 24 becomes 48. The fps is adjusted automatically.\n3. The audio track is preserved.\n\nFaster: switch the model to *seedvr2_3b_fp16* (softer), or bypass the upscale group to interpolate only."
+   ],
+   "color": "#432",
+   "bgcolor": "#653",
+   "title": "READ ME"
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   2,
+   0,
+   "VIDEO"
+  ],
+  [
+   2,
+   2,
+   0,
+   5,
+   0,
+   "IMAGE"
+  ],
+  [
+   3,
+   5,
+   0,
+   6,
+   0,
+   "COMFY_MATCHTYPE_V3"
+  ],
+  [
+   4,
+   6,
+   0,
+   7,
+   0,
+   "IMAGE"
+  ],
+  [
+   5,
+   4,
+   0,
+   7,
+   1,
+   "VAE"
+  ],
+  [
+   6,
+   7,
+   0,
+   8,
+   0,
+   "LATENT"
+  ],
+  [
+   7,
+   3,
+   0,
+   9,
+   0,
+   "MODEL"
+  ],
+  [
+   8,
+   8,
+   0,
+   9,
+   1,
+   "LATENT"
+  ],
+  [
+   9,
+   3,
+   0,
+   10,
+   0,
+   "MODEL"
+  ],
+  [
+   10,
+   9,
+   0,
+   10,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   11,
+   9,
+   1,
+   10,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   12,
+   8,
+   0,
+   10,
+   3,
+   "LATENT"
+  ],
+  [
+   13,
+   10,
+   0,
+   11,
+   0,
+   "LATENT"
+  ],
+  [
+   14,
+   8,
+   1,
+   11,
+   1,
+   "INT"
+  ],
+  [
+   15,
+   11,
+   0,
+   12,
+   0,
+   "LATENT"
+  ],
+  [
+   16,
+   4,
+   0,
+   12,
+   1,
+   "VAE"
+  ],
+  [
+   17,
+   12,
+   0,
+   13,
+   0,
+   "IMAGE"
+  ],
+  [
+   18,
+   5,
+   0,
+   13,
+   1,
+   "COMFY_MATCHTYPE_V3"
+  ],
+  [
+   19,
+   14,
+   0,
+   16,
+   0,
+   "INTERP_MODEL"
+  ],
+  [
+   20,
+   13,
+   0,
+   16,
+   1,
+   "IMAGE"
+  ],
+  [
+   21,
+   15,
+   0,
+   16,
+   2,
+   "INT"
+  ],
+  [
+   22,
+   2,
+   2,
+   17,
+   0,
+   "FLOAT"
+  ],
+  [
+   23,
+   15,
+   0,
+   17,
+   1,
+   "INT"
+  ],
+  [
+   24,
+   16,
+   0,
+   18,
+   0,
+   "IMAGE"
+  ],
+  [
+   25,
+   2,
+   1,
+   18,
+   1,
+   "AUDIO"
+  ],
+  [
+   26,
+   17,
+   0,
+   18,
+   2,
+   "FLOAT"
+  ],
+  [
+   27,
+   18,
+   0,
+   19,
+   0,
+   "VIDEO"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "1. Input video",
+   "bounding": [
+    660,
+    0,
+    1166.798828125,
+    765.6112630208333
+   ],
+   "color": "#8A8",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "2. SeedVR2 2x upscale (bypass group = interpolation only)",
+   "bounding": [
+    1966.798828125,
+    0,
+    1208.5939453125,
+    1010
+   ],
+   "color": "#88A",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "3. Frame interpolation + save",
+   "bounding": [
+    0,
+    1150,
+    1390,
+    780
+   ],
+   "color": "#A88",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.6,
+   "offset": [
+    0,
+    0
+   ]
+  }
+ },
+ "version": 0.4
+}

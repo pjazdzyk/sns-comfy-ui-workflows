@@ -1,0 +1,425 @@
+{
+ "last_node_id": 10001,
+ "last_link_id": 7,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadImage",
+   "pos": [
+    700,
+    110
+   ],
+   "size": [
+    420,
+    720
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      2,
+      3
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "lowres_demo.jpg",
+    "image"
+   ],
+   "title": "1. UPLOAD LOW-RES IMAGE (preview = original)"
+  },
+  {
+   "id": 2,
+   "type": "UpscaleModelLoader",
+   "pos": [
+    1340,
+    110
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "UPSCALE_MODEL",
+     "type": "UPSCALE_MODEL",
+     "links": [
+      1
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UpscaleModelLoader",
+    "models": [
+     {
+      "name": "4x-UltraSharp.safetensors",
+      "url": "https://huggingface.co/Kim2091/UltraSharp/resolve/main/4x-UltraSharp.safetensors",
+      "directory": "upscale_models"
+     }
+    ]
+   },
+   "widgets_values": [
+    "4x-UltraSharp.safetensors"
+   ],
+   "title": "4x-UltraSharp"
+  },
+  {
+   "id": 3,
+   "type": "ImageUpscaleWithModel",
+   "pos": [
+    1340,
+    258
+   ],
+   "size": [
+    260,
+    46
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "upscale_model",
+     "type": "UPSCALE_MODEL",
+     "link": 1
+    },
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      4
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageUpscaleWithModel"
+   },
+   "widgets_values": [],
+   "title": "Upscale 4x"
+  },
+  {
+   "id": 4,
+   "type": "ImageScaleBy",
+   "pos": [
+    1340,
+    394
+   ],
+   "size": [
+    278.249609375,
+    82
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 3
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      5
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleBy"
+   },
+   "widgets_values": [
+    "lanczos",
+    4.0
+   ],
+   "title": "plain 4x resize (for texture)"
+  },
+  {
+   "id": 5,
+   "type": "ImageBlend",
+   "pos": [
+    1708.249609375,
+    110
+   ],
+   "size": [
+    518.6080078125,
+    102
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image1",
+     "type": "IMAGE",
+     "link": 4
+    },
+    {
+     "name": "image2",
+     "type": "IMAGE",
+     "link": 5
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      6
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageBlend"
+   },
+   "widgets_values": [
+    0.25,
+    "normal"
+   ],
+   "title": "NATURALNESS (0 = pure UltraSharp, 0.25 = natural, 0.4 = soft)"
+  },
+  {
+   "id": 6,
+   "type": "ImageScaleBy",
+   "pos": [
+    1708.249609375,
+    302
+   ],
+   "size": [
+    318.540625,
+    82
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      7
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleBy"
+   },
+   "widgets_values": [
+    "lanczos",
+    1.0
+   ],
+   "title": "2. FINAL SIZE (1.0 = 4x, 0.5 = 2x)"
+  },
+  {
+   "id": 7,
+   "type": "SaveImage",
+   "pos": [
+    2446.8576171875,
+    110
+   ],
+   "size": [
+    460,
+    640
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "upscale/4xUltraSharp"
+   ],
+   "title": "3. RESULT + SAVE (output folder)"
+  },
+  {
+   "id": 10000,
+   "type": "MarkdownNote",
+   "pos": [
+    40,
+    110
+   ],
+   "size": [
+    440,
+    420
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {},
+   "widgets_values": [
+    "## 07 \u00b7 Quick upscale (4x-UltraSharp)\n\n1. Click **choose file to upload** in *1. UPLOAD LOW-RES IMAGE*. The node shows the original.\n2. Press **Run**. It takes a few seconds.\n3. The upscaled image appears in **3. RESULT + SAVE** and is saved automatically.\n\n**Where it's saved:** your ComfyUI **output** folder, subfolder **upscale**, as `4xUltraSharp_00001_.png`, \u2026\nTo save somewhere else, edit the *filename_prefix* (e.g. `MyProject/photo`).\n\n**Final size:** 1.0 gives full 4\u00d7 (512 px \u2192 2048 px). Use 0.5 for 2\u00d7. Downscaling the 4\u00d7 result usually looks cleaner than a direct 2\u00d7 upscale.\n\n**Naturalness:** 4x-UltraSharp alone makes skin look smooth and slightly painted. Blending 25% of a plain resize back in restores natural texture (this was tested). Set it to 0 for maximum crispness, e.g. for text, logos or illustrations.\n\n**Tips:**\n- Best for photos and renders that are small but clean.\n- For very blurry or heavily compressed photos, or faces, use **01**'s SeedVR2 stage instead. It reconstructs detail rather than only sharpening.\n- License: 4x-UltraSharp is CC BY-NC-SA 4.0, **non-commercial**. For commercial work use RealESRGAN_x4plus (BSD) or SeedVR2 (Apache)."
+   ],
+   "color": "#432",
+   "bgcolor": "#653",
+   "title": "READ ME"
+  }
+ ],
+ "links": [
+  [
+   1,
+   2,
+   0,
+   3,
+   0,
+   "UPSCALE_MODEL"
+  ],
+  [
+   2,
+   1,
+   0,
+   3,
+   1,
+   "IMAGE"
+  ],
+  [
+   3,
+   1,
+   0,
+   4,
+   0,
+   "IMAGE"
+  ],
+  [
+   4,
+   3,
+   0,
+   5,
+   0,
+   "IMAGE"
+  ],
+  [
+   5,
+   4,
+   0,
+   5,
+   1,
+   "IMAGE"
+  ],
+  [
+   6,
+   5,
+   0,
+   6,
+   0,
+   "IMAGE"
+  ],
+  [
+   7,
+   6,
+   0,
+   7,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "1. Input",
+   "bounding": [
+    660,
+    0,
+    500,
+    900
+   ],
+   "color": "#8A8",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "2. Upscale (4x-UltraSharp)",
+   "bounding": [
+    1300,
+    0,
+    966.8576171875,
+    546
+   ],
+   "color": "#88A",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "3. Result",
+   "bounding": [
+    2406.8576171875,
+    0,
+    540,
+    820
+   ],
+   "color": "#A88",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.6,
+   "offset": [
+    0,
+    0
+   ]
+  }
+ },
+ "version": 0.4
+}

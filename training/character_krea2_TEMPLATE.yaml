@@ -1,0 +1,72 @@
+---
+# Character identity LoRA for Krea 2 (train on Raw, generate with Turbo in ComfyUI 01 workflow).
+# Copy this file into ai-toolkit/config/, then replace: CHARNAME, TRIGGER (e.g. "ohwx woman") and the two PATH/TO paths.
+# Run (inside your ai-toolkit folder):  .venv\Scripts\python.exe run.py config\character_CHARNAME.yaml   (no account/token needed)
+# RTX 5090 (measured): ~1.3-2 s/step at 512px, more at 1024-1280 -> roughly 1.5-2.5 h for 2500 steps. Pick the checkpoint whose samples look most like the person
+# WITHOUT copying backgrounds/clothes from the dataset (usually 1500-2500 steps).
+job: extension
+config:
+  name: "CHARNAME_krea2_lora"
+  process:
+    - type: 'sd_trainer'
+      training_folder: "output"
+      device: cuda:0
+      trigger_word: "TRIGGER"
+      network:
+        type: "lora"
+        linear: 32          # rank 32 = good likeness for faces; 16 is lighter
+        linear_alpha: 32
+      save:
+        dtype: float16
+        save_every: 250
+        max_step_saves_to_keep: 10
+      datasets:
+        - folder_path: "PATH/TO/datasets/CHARNAME"          # output of scripts/make_character_dataset.py
+          caption_ext: "txt"
+          caption_dropout_rate: 0.05
+          shuffle_tokens: false
+          cache_latents_to_disk: true
+          resolution: [ 768, 1024, 1280 ]
+      train:
+        batch_size: 1
+        cache_text_embeddings: true
+        steps: 2500
+        skip_first_sample: true   # don't render 5 baseline samples before training (~7 min saved)
+        gradient_accumulation: 1
+        train_unet: true
+        train_text_encoder: false
+        gradient_checkpointing: true
+        noise_scheduler: "flowmatch"
+        timestep_type: "weighted"
+        optimizer: "adamw8bit"
+        lr: 1e-4
+        dtype: bf16
+        ema_config:
+          use_ema: true
+          ema_decay: 0.99
+      model:
+        name_or_path: "PATH/TO/ComfyUI/models/diffusion_models/krea2_raw_bf16.safetensors"   # ungated: huggingface.co/Comfy-Org/Krea-2 (verified key-compatible)
+        arch: "krea2"
+        quantize: true          # fp8 base weights -> fits 32 GB comfortably, LoRA itself trains in bf16
+        qtype: "qfloat8"
+        quantize_te: true
+        qtype_te: "qfloat8"
+        low_vram: false
+      sample:
+        sampler: "flowmatch"
+        sample_every: 500       # each preview round costs ~3 min; 3 prompts x 20 steps
+        sample_start_step: 0
+        width: 1024
+        height: 1280
+        prompts:
+          - "TRIGGER, close-up portrait, soft window light, neutral background, photo"
+          - "TRIGGER, full body photo walking on a rainy city street at night, neon reflections"
+          - "photo of a woman, close-up portrait, soft light"   # control prompt: must NOT look like TRIGGER
+        neg: ""
+        seed: 42
+        walk_seed: true
+        guidance_scale: 4
+        sample_steps: 20
+meta:
+  name: "[name]"
+  version: '1.0'

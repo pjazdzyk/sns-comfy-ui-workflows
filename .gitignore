@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+scripts/object_info.json
+datasets/
+*.part
+.DS_Store
+Thumbs.db
