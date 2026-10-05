@@ -251,13 +251,28 @@ LICENSES/     third-party license texts (Comfy Org MIT)
 
 ---
 
-## Author
+<p align="center">
+  <a href="https://github.com/pjazdzyk/pjazdzyk"><img src="https://github.com/pjazdzyk.png?size=200" width="88" alt="Piotr Jażdżyk"></a>
+</p>
 
-Hi, I'm **Piotr Jażdżyk** 👋 By day I mostly write code and build [EnergyFlowX](https://energyflowx.com). By night my GPU runs local AI models and heats the apartment. Professionally speaking, it's the most expensive radiator this building has ever had.
+<p align="center">
+  Hi, I'm <b>Piotr Jażdżyk</b> 👋<br>
+  By day I mostly write code and build <a href="https://energyflowx.com">EnergyFlowX</a>.<br>
+  By night my GPU runs local AI models and heats the apartment.<br>
+  <i>Professionally speaking, it's the most expensive radiator this building has ever had.</i>
+</p>
 
-If they helped you, or you made something cool with them, come say hello. I'd love to see it:
+<p align="center">
+  Made something cool with these workflows? Come say hello, I'd love to see it.<br><br>
+  <a href="https://www.linkedin.com/in/pjazdzyk/"><b>LinkedIn</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/pjazdzyk/pjazdzyk"><b>About me</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://energyflowx.com"><b>EnergyFlowX</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/pjazdzyk/sns-comfy-ui-workflows/issues"><b>Report a bug</b></a>
+</p>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Say%20hello-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pjazdzyk/)
-[![GitHub](https://img.shields.io/badge/GitHub-About%20me-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pjazdzyk/pjazdzyk)
-
-Found a bug or a model that does it better? Open an issue. I read them all.
+<p align="center">
+  <sub>Workflows and scripts are <a href="LICENSE">MIT</a>. Models keep <a href="LICENSING.md">their own licenses</a>.</sub>
+</p>
