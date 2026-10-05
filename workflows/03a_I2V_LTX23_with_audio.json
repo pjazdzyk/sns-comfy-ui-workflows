@@ -84,11 +84,11 @@
         }
       },
       "widgets_values": [
-        "egyptian_queen.png",
+        "example.png",
         "image"
       ],
       "widgets_values_named": {
-        "image": "egyptian_queen.png",
+        "image": "example.png",
         "upload": "image"
       }
     },

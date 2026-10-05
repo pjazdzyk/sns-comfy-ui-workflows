@@ -194,7 +194,7 @@ The pipeline in the README chains three licenses:
 
 - **License of this repo.** The workflows, scripts and docs are MIT ([`LICENSE`](LICENSE)). That covers only this repository's own files, not the models it downloads.
 - **Workflow JSON and scripts.** The Python scripts talk to ComfyUI only over its HTTP API and import none of its code, so ComfyUI's GPL does not reach them. Workflow JSON is input data, not code.
-- **Adapted Comfy Org templates.** Workflows 02, 03a–d, 05 and 06 are adapted from [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates) (MIT, "Copyright (c) 2023-present Comfy Org"). MIT requires that notice in every copy, so it is included as [`LICENSES/Comfy-Org-workflow_templates-MIT.txt`](LICENSES/Comfy-Org-workflow_templates-MIT.txt).
+- **Adapted Comfy Org templates.** Workflows 02, 03a–d, 05 and 06, and the prompt-enhancer system prompt in 01, are adapted from [Comfy-Org/workflow_templates](https://github.com/Comfy-Org/workflow_templates) (MIT, "Copyright (c) 2023-present Comfy Org"). MIT requires that notice in every copy, so it is included as [`LICENSES/Comfy-Org-workflow_templates-MIT.txt`](LICENSES/Comfy-Org-workflow_templates-MIT.txt).
 - **No model weights are hosted here.** The repo only links to them, so the redistribution duties above (Krea and Gemma notice files, passing on license copies) fall on whoever re-hosts the files, not on this repo *(interpretation; none of the licenses addresses linking)*.
 - **Example images in `docs/images/`:**
   - They are disclosed as AI-generated test results.
@@ -219,4 +219,4 @@ The pipeline in the README chains three licenses:
 2. **YOLO detectors:** the uploader says Apache-2.0, Ultralytics says AGPL-3.0, and the AGPL text itself does not mention weights.
 3. **NC and research licenses:** whether "NC" (UltraSharp) or "research only" (Qwen-Image 2.1) reaches the generated images themselves.
 4. **Abliterated Gemma LoRA:** how it squares with Gemma's ban on circumventing safety filters.
-5. **EU AI Act Article 50:** it requires deepfakes to be labelled as AI-generated. Check how it applies to your use of 03c and 05, separately from the model licenses.
+5. **EU AI Act Article 50:** it has applied since 2 August 2026 and requires deepfakes to be labelled as AI-generated. There is a short summary in the [README](README.md#eu-ai-act-label-what-you-publish). Check how it applies to your use of 03c and 05, separately from the model licenses.

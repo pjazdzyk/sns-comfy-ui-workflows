@@ -31,7 +31,7 @@
     "Node name for S&R": "LoadVideo"
    },
    "widgets_values": [
-    "demo_clip_for_finisher.mp4",
+    "your_video.mp4",
     "image"
    ],
    "title": "LOAD VIDEO"

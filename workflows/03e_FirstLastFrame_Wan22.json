@@ -877,7 +877,7 @@
     "Node name for S&R": "LoadImage"
    },
    "widgets_values": [
-    "video_wan2_2_14B_flf2v_start_image.png",
+    "example.png",
     "image"
    ],
    "title": "1. FIRST FRAME"
@@ -917,7 +917,7 @@
     "Node name for S&R": "LoadImage"
    },
    "widgets_values": [
-    "video_wan2_2_14B_flf2v_end_image.png",
+    "example.png",
     "image"
    ],
    "title": "2. LAST FRAME"

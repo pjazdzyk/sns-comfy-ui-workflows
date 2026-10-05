@@ -6,7 +6,7 @@ ComfyUI workflows for photorealistic images, consistent characters, image-to-vid
 - **Free to run, not always free to sell.** 03d, 03e, 04 and 05 are fine for commercial work. 01 and 03a–c have revenue limits. 02, 06 and 07 are non-commercial. See [Licenses](#licenses).
 - **Tested end to end** on an RTX 5090 (32 GB VRAM, 128 GB RAM) with ComfyUI v0.38. Speeds below are from that machine.
 
-<p align="center"><img src="docs/images/01_krea2_portrait.jpg" alt="Krea 2 portrait" width="360"></p>
+<p align="center"><img src="docs/images/01_krea2_portrait.jpg" alt="AI-generated portrait made with Krea 2" width="360"><br><sub>🤖 AI-generated image · workflow 01, Krea 2 · not a real person</sub></p>
 
 ---
 
@@ -95,7 +95,7 @@ How it works:
 - **Why only small ones:** in testing, re-rendering *large* faces made skin worse, because Krea 2 already renders them perfectly. Small faces in crowds and wide shots are where it helps.
 - **Upscale:** SeedVR2 7B does a 2× upscale that adds real skin, hair and eyelash detail.
 
-<img src="docs/images/01_seedvr2_detail.jpg" alt="SeedVR2 detail" width="600">
+<p><img src="docs/images/01_seedvr2_detail.jpg" alt="AI-generated image, detail before and after SeedVR2 upscale" width="600"><br><sub>🤖 AI-generated image · workflow 01, Krea 2 + SeedVR2 upscale · not a real person</sub></p>
 
 Options:
 - **Skip the upscale:** right-click the orange group → *Bypass Group Nodes*.
@@ -105,7 +105,7 @@ Options:
 ### 02 · Typography (Qwen-Image 2.1)
 Put the exact words in quotes, e.g. `vintage poster, headline "ZAKOPANE", subtitle "Winter 1936"`. The built-in prompt enhancer plans the layout for you.
 
-<img src="docs/images/02_typography.jpg" alt="Typography poster" width="320">
+<p><img src="docs/images/02_typography.jpg" alt="AI-generated typography poster made with Qwen-Image 2.1" width="320"><br><sub>🤖 AI-generated image · workflow 02, Qwen-Image 2.1 · not a real person</sub></p>
 
 ### 03a / 03b · Video with sound (LTX-2.3)
 - **03a:** load an image, then describe **what happens**, not what the scene looks like (the image already shows that). Example: "she laughs, sips the coffee and smiles at someone off-camera, city street ambience".
@@ -126,7 +126,7 @@ Load an image and describe the motion and camera move.
 - **Final render:** turn it off for full quality (~12 min). In our test both looked very close.
 - Wan outputs 16 fps; run the result through **04** for 32 fps.
 
-<img src="docs/images/03d_wan22_image_to_video.jpg" alt="Wan 2.2 image to video" width="640">
+<p><img src="docs/images/03d_wan22_image_to_video.jpg" alt="AI-generated video frames made with Wan 2.2" width="640"><br><sub>🤖 AI-generated video frames · workflow 03d, Wan 2.2 · not a real person</sub></p>
 
 ### 03e · First + last frame (Wan 2.2)
 1. Load a **FIRST FRAME** and a **LAST FRAME** of **the same scene**, e.g. two poses of one person.
@@ -141,7 +141,7 @@ If the two frames differ in outfit or background, the clip will jump abruptly be
 3. RIFE doubles the frame rate; the fps is set automatically.
 4. The audio track is kept.
 
-<img src="docs/images/04_seedvr2_video_3b_vs_7b.jpg" alt="SeedVR2 3B vs 7B" width="600">
+<p><img src="docs/images/04_seedvr2_video_3b_vs_7b.jpg" alt="AI-generated video frame upscaled with SeedVR2 3B and 7B" width="600"><br><sub>🤖 AI-generated video frame · workflow 04, SeedVR2 3B vs 7B · not a real person</sub></p>
 
 To trade quality for speed, switch the model to `seedvr2_3b_fp16` (about the same speed in our test, visibly softer), or bypass the upscale group to interpolate only.
 
@@ -152,7 +152,7 @@ To trade quality for speed, switch the model to `seedvr2_3b_fp16` (about the sam
 
 Use footage and character images of people who have agreed to it, and label the results as AI-generated.
 
-<img src="docs/images/05_motion_transfer.jpg" alt="Motion transfer" width="640">
+<p><img src="docs/images/05_motion_transfer.jpg" alt="AI-generated motion transfer frames made with Wan Animate 2" width="640"><br><sub>🤖 AI-generated video frames · workflow 05, Wan Animate 2 · not a real person</sub></p>
 
 ### 06 · Same character, new scenes (Qwen-Image 2.1)
 Load 1–10 reference images of the person and describe the new shot ("same woman, red dress, beach at sunset").
@@ -166,7 +166,7 @@ Controls:
 - **Naturalness** (default 0.25) blends a little of a plain resize back in. 4x-UltraSharp alone makes skin look smooth and painted; set 0 for text, logos and illustrations.
 - **Final size:** 1.0 = 4×, 0.5 = 2×.
 
-<img src="docs/images/07_ultrasharp.jpg" alt="4x-UltraSharp" width="640">
+<p><img src="docs/images/07_ultrasharp.jpg" alt="Original, plain resize, and AI upscale with 4x-UltraSharp" width="640"><br><sub>🤖 AI-generated portrait, right panel upscaled with 4x-UltraSharp · workflow 07 · not a real person</sub></p>
 
 ---
 
@@ -183,7 +183,7 @@ The most reliable way to keep one identity across hundreds of images and videos.
    ```
    ComfyUI must be running. Use port `8000` for the Desktop app, `8188` for a manual install. Then **curate**: delete any image where the face drifted.
 
-   <img src="docs/images/06_character_dataset.jpg" alt="Character dataset" width="640">
+   <p><img src="docs/images/06_character_dataset.jpg" alt="AI-generated character dataset made with Qwen-Image 2.1" width="640"><br><sub>🤖 AI-generated images · dataset script, Qwen-Image 2.1 · not a real person</sub></p>
 3. **Train a LoRA** with [ostris/ai-toolkit](https://github.com/ostris/ai-toolkit), using [`training/character_krea2_TEMPLATE.yaml`](training/character_krea2_TEMPLATE.yaml). It trains on the ungated **Krea 2 Raw** from `Comfy-Org/Krea-2`, which we verified is weight-compatible with ai-toolkit. Training takes ~1.5–2.5 h on a 5090.
 4. **Generate.** Load the LoRA in **01**. The face fixer uses the same LoRA, so close-ups keep the identity.
 5. **Animate.** Use those images as first frames in **03a / 03d**, or drive them with your own movement in **05**.
@@ -210,7 +210,30 @@ Also worth knowing:
   - **MiniMax H3:** its license excludes the EU, UK, South Korea and USA.
   - **LTX-2.5:** gated behind a login and marketing consent.
 
-This repository's own files (workflows, scripts, docs) are [MIT](LICENSE). That license doesn't cover the models, which keep their own licenses. Workflows 02, 03a–d, 05 and 06 are adapted from the official [ComfyUI workflow templates](https://github.com/Comfy-Org/workflow_templates) (MIT License, © 2023-present Comfy Org); the license text is in [`LICENSES/`](LICENSES/Comfy-Org-workflow_templates-MIT.txt).
+This repository's own files (workflows, scripts, docs) are [MIT](LICENSE). That license doesn't cover the models, which keep their own licenses. Workflows 02, 03a–d, 05 and 06, and the prompt-enhancer system prompt in 01, are adapted from the official [ComfyUI workflow templates](https://github.com/Comfy-Org/workflow_templates) (MIT License, © 2023-present Comfy Org); the license text is in [`LICENSES/`](LICENSES/Comfy-Org-workflow_templates-MIT.txt).
+
+---
+
+## EU AI Act: label what you publish
+
+Since **2 August 2026** the EU AI Act's transparency rules ([Article 50](https://artificialintelligenceact.eu/article/50/)) apply to AI-generated content, whatever model made it. In short (not legal advice):
+
+- **Who it applies to:** anyone using these workflows for work or business, or putting the content in front of people in the EU. Purely personal, non-professional use is exempt.
+- **Deepfakes must be disclosed** (Art. 50(4)). This covers an image, video or audio that resembles real people, places, objects or events and could pass as real. Say clearly that it is AI-generated or AI-manipulated, at the latest when people first see it. Workflows 01, 03a–c, 05 and the character pipeline can all produce this kind of content.
+- **Creative work** that is evidently artistic, satirical or fictional still needs a disclosure. It can be light, e.g. a credit or caption, so long as it doesn't spoil the work.
+- **Building an app or service on top?** You are then a *provider*, and the outputs must also carry a machine-readable AI marking, such as a watermark or metadata (Art. 50(2)). These workflows don't add one, so you'd have to.
+- **Fines:** up to €15M or 3% of worldwide annual turnover (Art. 99(4)).
+
+Free help from the European Commission:
+- **[EU icons for labelling AI content](https://digital-strategy.ec.europa.eu/en/policies/eu-icons-labelling-ai-generated-content):** optional to use, free, no attribution needed.
+- **[Code of Practice on transparency of AI-generated content](https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content):** final since June 2026.
+
+**Other rules apply on top of the AI Act:**
+- **Model licenses:** the LTX license requires a machine-generated disclaimer on published LTX output, everywhere, not just in the EU. Krea 2 requires disclosure wherever the law asks for it.
+- **Platforms:** YouTube, TikTok, Instagram and others have their own AI-label settings.
+- **Real people:** using a real person's face or voice also needs their consent under image and data-protection law.
+
+Every image in this README is labelled as AI-generated, and each file carries the IPTC "AI-generated" metadata (`trainedAlgorithmicMedia`). Every person shown was generated from a text prompt; none is a real person. In workflows 04 and 05, only the dance *movement* came from a ComfyUI demo clip, and no frame of that clip appears.
 
 ---
 

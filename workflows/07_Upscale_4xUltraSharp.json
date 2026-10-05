@@ -38,7 +38,7 @@
     "Node name for S&R": "LoadImage"
    },
    "widgets_values": [
-    "lowres_demo.jpg",
+    "example.png",
     "image"
    ],
    "title": "1. UPLOAD LOW-RES IMAGE (preview = original)"

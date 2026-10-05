@@ -73,11 +73,11 @@
         "secondTabWidth": 65
       },
       "widgets_values": [
-        "cactus_man.png",
+        "example.png",
         "image"
       ],
       "widgets_values_named": {
-        "image": "cactus_man.png",
+        "image": "example.png",
         "upload": "image"
       }
     },
@@ -213,12 +213,12 @@
         "secondTabWidth": 65
       },
       "widgets_values": [
-        "ltx_23_audio.mp3",
+        "your_audio.mp3",
         null,
         null
       ],
       "widgets_values_named": {
-        "audio": "ltx_23_audio.mp3",
+        "audio": "your_audio.mp3",
         "upload": null
       }
     },
